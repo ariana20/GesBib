@@ -8,11 +8,18 @@ package pe.edu.pucp.gesbibsoft.mysql;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import pe.edu.pucp.gesbibsoft.config.DBManager;
 import pe.edu.pucp.gesbibsoft.dao.PersonalBibliotecaDAO;
+import pe.edu.pucp.gesbibsoft.enums.TipoPersonal;
+import pe.edu.pucp.gesbibsoft.model.Auxiliar;
+import pe.edu.pucp.gesbibsoft.model.Biblioteca;
+import pe.edu.pucp.gesbibsoft.model.Bibliotecario;
 import pe.edu.pucp.gesbibsoft.model.PerfilExperiencia;
 import pe.edu.pucp.gesbibsoft.model.PersonalBiblioteca;
+import pe.edu.pucp.gesbibsoft.model.Practicante;
 
 /**
  *
@@ -47,6 +54,97 @@ public class PersonalBibliotecaMySQL implements PersonalBibliotecaDAO{
         return resultado;
     
     
+    }
+    
+    
+    
+    @Override
+    public ArrayList<PersonalBiblioteca> listar(String nombre, String apellido) {
+        ArrayList<PersonalBiblioteca> personal = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            CallableStatement cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA(?,?,?)}");
+            cStmt.setString("_NOMBRE", nombre);
+            cStmt.setString("_APELLIDO", apellido);
+            cStmt.setInt("_ID_TIPO_PERSONAL", TipoPersonal.Bibliotecario.value);
+            ResultSet rs=cStmt.executeQuery();
+            while (rs.next()) {
+                Bibliotecario e = new Bibliotecario();
+                e.setId(rs.getInt("ID_PERSONAL_BIBLIOTECA"));
+                e.setNombre(rs.getString("NOMBRE"));
+                e.setApellido(rs.getString("APELLIDO"));
+                e.setEmail(rs.getString("EMAIL"));
+                e.setContrasenia(rs.getString("PASSWORD"));
+                e.setCodigo(rs.getString("CODIGO"));
+                e.setFecha_ingreso(rs.getDate("FECHA_INGRESO"));
+                e.setTotalHorasExtra(rs.getFloat("TOTAL_HORA_EXTRA"));
+                e.getTurno().setId(rs.getInt("ID_TURNO"));
+                Biblioteca b=new Biblioteca();
+                b.setId(rs.getInt("ID_BIBLIOTECA"));
+                e.setBiblioteca(b);
+                e.setDiaSemana(rs.getString("DIA_SEMANA"));
+        
+                personal.add(e);
+            }
+            
+            
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA(?,?,?)}");
+            cStmt.setString("_NOMBRE", nombre);
+            cStmt.setString("_APELLIDO", apellido);
+            cStmt.setInt("_ID_TIPO_PERSONAL", TipoPersonal.Auxiliar.value);
+            rs=cStmt.executeQuery();
+            while (rs.next()) {
+                Auxiliar e = new Auxiliar();
+                e.setId(rs.getInt("ID_PERSONAL_BIBLIOTECA"));
+                e.setNombre(rs.getString("NOMBRE"));
+                e.setApellido(rs.getString("APELLIDO"));
+                e.setEmail(rs.getString("EMAIL"));
+                e.setContrasenia(rs.getString("PASSWORD"));
+                e.setCodigo(rs.getString("CODIGO"));
+                e.setFecha_ingreso(rs.getDate("FECHA_INGRESO"));
+                e.setTotalHorasExtra(rs.getFloat("TOTAL_HORA_EXTRA"));
+                e.getTurno().setId(rs.getInt("ID_TURNO"));
+                Biblioteca b=new Biblioteca();
+                b.setId(rs.getInt("ID_BIBLIOTECA"));
+                e.setBiblioteca(b);
+                personal.add(e);
+            }
+            
+            
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA(?,?,?)}");
+            cStmt.setString("_NOMBRE", nombre);
+            cStmt.setString("_APELLIDO", apellido);
+            cStmt.setInt("_ID_TIPO_PERSONAL", TipoPersonal.Practicante.value);
+            rs=cStmt.executeQuery();
+            while (rs.next()) {
+                Practicante e = new Practicante();
+                e.setId(rs.getInt("ID_PERSONAL_BIBLIOTECA"));
+                e.setNombre(rs.getString("NOMBRE"));
+                e.setApellido(rs.getString("APELLIDO"));
+                e.setEmail(rs.getString("EMAIL"));
+                e.setContrasenia(rs.getString("PASSWORD"));
+                e.setCodigo(rs.getString("CODIGO"));
+                e.setFecha_ingreso(rs.getDate("FECHA_INGRESO"));
+                e.setTotalHorasExtra(rs.getFloat("TOTAL_HORA_EXTRA"));
+                e.getTurno().setId(rs.getInt("ID_TURNO"));
+                Biblioteca b=new Biblioteca();
+                b.setId(rs.getInt("ID_BIBLIOTECA"));
+                e.setBiblioteca(b);
+                personal.add(e);
+            }
+            
+        } catch ( SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return personal;
     }
     
 }

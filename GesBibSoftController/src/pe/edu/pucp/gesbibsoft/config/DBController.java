@@ -361,10 +361,13 @@ public abstract class DBController {
     public static PairStringUsuario  validarUsuario(String email, String password) {
         return daoFact.getUsuarioDAO().validarUsuario(email, password);
     }
-
+    //PERSONAL_BIBLIOTECA
     public static int asignarPerfil(PersonalBiblioteca personalBiblioteca, PerfilExperiencia perfilExperiencia) {
         return daoFact.getPersonalBibliotecaDAO().asignarPerfil(personalBiblioteca,perfilExperiencia);
        
+    }
+    public static ArrayList<PersonalBiblioteca> listarPersonalBiblioteca(String nombre, String apellido){
+        return daoFact.getPersonalBibliotecaDAO().listar(nombre, apellido);
     }
 
     public static String hallarTipoUsuario(int idUsuario) {

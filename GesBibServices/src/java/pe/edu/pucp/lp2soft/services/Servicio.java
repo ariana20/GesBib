@@ -168,6 +168,10 @@ public class Servicio {
                             PerfilExperiencia perfilExperiencia){
         return DBController.asignarPerfil(personalBiblioteca, perfilExperiencia);
     }
+    @WebMethod(operationName = "listarPersonalBiblioteca")
+    public ArrayList<PersonalBiblioteca> listarPersonalBiblioteca(@WebParam(name = "nombre") String nombre, @WebParam(name = "apellido")  String apellido){
+        return DBController.listarPersonalBiblioteca(nombre, apellido);
+    }
     
     //BIBLIOTECARIO
     @WebMethod(operationName = "insertarBibliotecario")
