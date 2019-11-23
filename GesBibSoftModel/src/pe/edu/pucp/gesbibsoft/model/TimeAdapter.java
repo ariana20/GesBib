@@ -16,7 +16,7 @@ public class TimeAdapter extends XmlAdapter<String, Time>{
     @Override
     public Time unmarshal(String v) throws Exception {
         ArrayList<SimpleDateFormat> patrones = new ArrayList<>();
-        patrones.add(new SimpleDateFormat("HH:mm:ss"));
+        patrones.add(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"));
         patrones.add(new SimpleDateFormat("H:mm:ss"));
         patrones.add(new SimpleDateFormat("HH:mm"));
         patrones.add(new SimpleDateFormat("H:mm"));
