@@ -373,7 +373,9 @@ public abstract class DBController {
     public static String hallarTipoUsuario(int idUsuario) {
         return daoFact.getPersonalDAO().hallarTipoUsuario(idUsuario);
     }
-    
+    public static int eliminarPersonal(int idPersonal) {
+        return daoFact.getPersonalBibliotecaDAO().eliminar(idPersonal);
+    }
     // Utilitarios
     public static ArrayList<Personal> listarUsuariosLibres(Date fecha, String hora_inicio, String hora_fin, String nombre_perfil) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
@@ -383,4 +385,6 @@ public abstract class DBController {
         Time horaF = new Time(ms2);
         return daoFact.getUsuarioDAO().listarUsuariosLibres(fecha, horaI, horaF, nombre_perfil);
     }
+
+
 }

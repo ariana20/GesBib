@@ -157,7 +157,7 @@ public class Servicio {
         return DBController.actualizarPuntosAtencion(puntoAtencion);
     }
     @WebMethod(operationName = "listarPuntosAtencion")
-    public ArrayList<PuntosAtencion> listarPuntosAtencion(int idBiblioteca){
+    public ArrayList<PuntosAtencion> listarPuntosAtencion(@WebParam(name = "idBiblioteca") int idBiblioteca){
         return DBController.listarPuntosAtencion(idBiblioteca);
     }
     
@@ -171,6 +171,10 @@ public class Servicio {
     @WebMethod(operationName = "listarPersonalBiblioteca")
     public ArrayList<PersonalBiblioteca> listarPersonalBiblioteca(@WebParam(name = "nombre") String nombre, @WebParam(name = "apellido")  String apellido){
         return DBController.listarPersonalBiblioteca(nombre, apellido);
+    }
+    @WebMethod(operationName = "eliminarPersonalBiblioteca")
+    public int eliminarPersonalBiblioteca(@WebParam(name = "idPersonal") int idPersonal){
+        return DBController.eliminarPersonal(idPersonal);
     }
     
     //BIBLIOTECARIO
