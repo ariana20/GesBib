@@ -111,7 +111,7 @@ public class PracticanteMySQL implements PracticanteDAO {
         ArrayList<Practicante> practicantes = new ArrayList<>();
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            CallableStatement cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA(?,?,?)}");
+            CallableStatement cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA_ACTIVO(?,?,?)}");
             cStmt.setString("_NOMBRE", nombre);
             cStmt.setString("_APELLIDO", apellido);
             cStmt.setInt("_ID_TIPO_PERSONAL", TipoPersonal.Practicante.value);

@@ -63,7 +63,7 @@ public class PersonalBibliotecaMySQL implements PersonalBibliotecaDAO{
         ArrayList<PersonalBiblioteca> personal = new ArrayList<>();
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            CallableStatement cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA(?,?,?)}");
+            CallableStatement cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA_ACTIVO(?,?,?)}");
             cStmt.setString("_NOMBRE", nombre);
             cStmt.setString("_APELLIDO", apellido);
             cStmt.setInt("_ID_TIPO_PERSONAL", TipoPersonal.Bibliotecario.value);
@@ -89,7 +89,7 @@ public class PersonalBibliotecaMySQL implements PersonalBibliotecaDAO{
             
             
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA(?,?,?)}");
+            cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA_ACTIVO(?,?,?)}");
             cStmt.setString("_NOMBRE", nombre);
             cStmt.setString("_APELLIDO", apellido);
             cStmt.setInt("_ID_TIPO_PERSONAL", TipoPersonal.Auxiliar.value);
@@ -113,7 +113,7 @@ public class PersonalBibliotecaMySQL implements PersonalBibliotecaDAO{
             
             
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA(?,?,?)}");
+            cStmt = con.prepareCall("{call LISTAR_PERSONAL_BIBLIOTECA_ACTIVO(?,?,?)}");
             cStmt.setString("_NOMBRE", nombre);
             cStmt.setString("_APELLIDO", apellido);
             cStmt.setInt("_ID_TIPO_PERSONAL", TipoPersonal.Practicante.value);
@@ -145,6 +145,28 @@ public class PersonalBibliotecaMySQL implements PersonalBibliotecaDAO{
             }
         }
         return personal;
+    }
+
+    @Override
+    public int eliminar(int idPersonal) {
+        int resul=0;
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cs = con.prepareCall("{call ELIMINAR_PERSONAL_BIBLIOTECA(?)}");
+            cs.setInt("_ID_PERSONAL_BIBLIOTECA", idPersonal);
+            
+            cs.executeUpdate();
+            resul=1;
+        } catch ( SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return resul;
     }
     
 }
