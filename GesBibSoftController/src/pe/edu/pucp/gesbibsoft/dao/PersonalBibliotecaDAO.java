@@ -5,6 +5,7 @@
  */
 package pe.edu.pucp.gesbibsoft.dao;
 
+import java.util.ArrayList;
 import pe.edu.pucp.gesbibsoft.model.PerfilExperiencia;
 import pe.edu.pucp.gesbibsoft.model.PersonalBiblioteca;
 
@@ -15,5 +16,7 @@ import pe.edu.pucp.gesbibsoft.model.PersonalBiblioteca;
 public interface PersonalBibliotecaDAO {
     
     int asignarPerfil(PersonalBiblioteca personalBiblioteca,PerfilExperiencia perfilExperiencia);
-    
+    ArrayList<PersonalBiblioteca> listar(String nombre, String apellido);
+
+    public int eliminar(int idPersonal);
 }

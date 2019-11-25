@@ -361,10 +361,13 @@ public abstract class DBController {
     public static PairStringUsuario  validarUsuario(String email, String password) {
         return daoFact.getUsuarioDAO().validarUsuario(email, password);
     }
-
+    //PERSONAL_BIBLIOTECA
     public static int asignarPerfil(PersonalBiblioteca personalBiblioteca, PerfilExperiencia perfilExperiencia) {
         return daoFact.getPersonalBibliotecaDAO().asignarPerfil(personalBiblioteca,perfilExperiencia);
        
+    }
+    public static ArrayList<PersonalBiblioteca> listarPersonalBiblioteca(String nombre, String apellido){
+        return daoFact.getPersonalBibliotecaDAO().listar(nombre, apellido);
     }
 
     public static String hallarTipoUsuario(int idUsuario) {
@@ -379,6 +382,9 @@ public abstract class DBController {
         return daoFact.getUsuarioDAO().cambiarContrasenaToken(correo, nuevaContrasena, token);
     }
     
+    public static int eliminarPersonal(int idPersonal) {
+        return daoFact.getPersonalBibliotecaDAO().eliminar(idPersonal);
+    }
     // Utilitarios
     public static ArrayList<Personal> listarUsuariosLibres(Date fecha, String hora_inicio, String hora_fin, String nombre_perfil) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
@@ -388,4 +394,5 @@ public abstract class DBController {
         Time horaF = new Time(ms2);
         return daoFact.getUsuarioDAO().listarUsuariosLibres(fecha, horaI, horaF, nombre_perfil);
     }
+
 }
