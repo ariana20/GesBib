@@ -62,6 +62,7 @@ public class UsuarioMySQL implements UsuarioDAO{
             user.setId(rs.getInt("ID_USUARIO"));
             user.setApellido(rs.getString("APELLIDO"));
             user.setNombre(rs.getString("NOMBRE"));
+            user.setEmail(rs.getString("EMAIL"));
             
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
