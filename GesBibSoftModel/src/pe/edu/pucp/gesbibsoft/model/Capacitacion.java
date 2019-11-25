@@ -14,6 +14,7 @@ public class Capacitacion {
     private Date inicio_inscripcion;
     private Date fin_inscripcion;
     
+         
     
     // ATRIBUTOS ASOCIACIONES
     private ArrayList<Personal> listaPersonal;
@@ -35,7 +36,7 @@ public class Capacitacion {
     public void setId(int id) {
         this.id = id;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -128,6 +129,9 @@ public class Capacitacion {
         this.listaPersonal = new ArrayList<>();
         this.listaDiasCapacitacion = new ArrayList<>();
     }
+
+   
+   
     
     
     

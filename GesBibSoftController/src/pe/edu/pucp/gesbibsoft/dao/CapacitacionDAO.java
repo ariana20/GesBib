@@ -18,4 +18,10 @@ public interface CapacitacionDAO {
     int eliminar(int idCapacitacion);
 
     ArrayList<Capacitacion> listar();
+    
+    //bytys
+    //ArrayList<Capacitacion> listarCapacitacionesDePersonalxEstado(int,int,int);
+    ArrayList <Capacitacion> listarCapacitacionesDePersonalxEstado(
+            int idPersonal,int estado);
+    
 }

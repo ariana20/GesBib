@@ -75,11 +75,16 @@ public class CapacitacionMySQL implements CapacitacionDAO {
     }
 
     @Override
+    /*
+    -1 --> pendiente
+    1 --> aceptada
+    0--> no aceptada .... las acapaccitaciones
+    */
     public int actualizar(Capacitacion capacitacion) {
         int resultado=0;
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            cs = con.prepareCall("{call ACTUALIZAR_CAPACITACION(?,?,?,?,?,?,?,?)}");
+            cs = con.prepareCall("{call ACTUALIZAR_CAPACITACION(?,?,?,?,?,?,?,?,?)}");
             cs.setInt("_ID_CAPACITACION", capacitacion.getId());
             cs.setString("_NOMBRE", capacitacion.getNombre());
             cs.setString("_DESCRIPCION", capacitacion.getDescripcion());
@@ -180,6 +185,7 @@ public class CapacitacionMySQL implements CapacitacionDAO {
                 capa.setFecha_fin(rs.getDate("FECHA_FIN"));
                 capa.setInicio_inscripcion(rs.getDate("INICIO_INSCRIPCION"));
                 capa.setFin_inscripcion(rs.getDate("FIN_INSCRIPCION"));
+             
                 
                 // AÑADIENDO TODOS LOS DIAS DE LA CAPACITACION
                 ArrayList<Dia_Capacitacion> dias_capacitacion = new ArrayList<>();
@@ -235,5 +241,41 @@ public class CapacitacionMySQL implements CapacitacionDAO {
         }
         return capacitaciones;
     }
+
+    @Override
+    public ArrayList<Capacitacion> listarCapacitacionesDePersonalxEstado(
+            int idPersonal, int estado) {
+        
+          ArrayList<Capacitacion> capacitaciones = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            CallableStatement cStmt = 
+                    con.prepareCall("{call LISTAR_PERS_CAPAC_DESCRIPCION_ByESTADO(?,?)}");
+            cStmt.setInt("_ID_PERSONAL", idPersonal);
+            cStmt.setInt("_ESTADO", estado);
+                    
+            ResultSet rs=cStmt.executeQuery();
+            while (rs.next()) {
+                Capacitacion e = new Capacitacion();
+                e.setId(rs.getInt("ID_CAPACITACION"));
+                e.setNombre(rs.getString("NOMBRE"));
+                e.setDescripcion(rs.getString("DESCRIPCION"));
+                capacitaciones.add(e);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return capacitaciones;  
+    }
+
+
+
+    
 
 }
