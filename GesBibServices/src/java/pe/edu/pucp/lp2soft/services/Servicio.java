@@ -99,6 +99,13 @@ public class Servicio {
         return DBController.listarCapacitacion();
     }
     
+    @WebMethod(operationName = "listarCapacitacionesPersonalxEstado")
+    public ArrayList<Capacitacion> listarCapacitacionesPersonalxEstado(
+    @WebParam(name = "idPersonal") int idPersonal,
+    @WebParam(name = "estado") int estado){
+        return DBController.listarCapaPersxEstado(idPersonal,estado);
+    }
+    
    
     
     @WebMethod(operationName = "actualizarCapacitacion")

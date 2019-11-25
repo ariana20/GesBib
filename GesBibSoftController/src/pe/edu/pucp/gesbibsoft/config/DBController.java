@@ -139,7 +139,13 @@ public abstract class DBController {
         return daoFact.getCapacitacionDAO().listar();
     }
     
- 
+    public static ArrayList<Capacitacion> 
+        listarCapaPersxEstado(int idPers,int estado) {
+        return daoFact.getCapacitacionDAO().listarCapacitacionesDePersonalxEstado(
+                idPers, estado);
+    }
+    
+ //listarCapacitacionesDePersonalxEstado
 
     //DISTRIBUCION_PERSONAL
     public static void insertarDistribucionPersonal(DistribucionPersonal distrib_Per) {

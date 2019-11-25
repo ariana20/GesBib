@@ -14,10 +14,7 @@ public class Capacitacion {
     private Date inicio_inscripcion;
     private Date fin_inscripcion;
     
-    //bytys
-    private int estado;
-    
-    
+         
     
     // ATRIBUTOS ASOCIACIONES
     private ArrayList<Personal> listaPersonal;
@@ -39,16 +36,6 @@ public class Capacitacion {
     public void setId(int id) {
         this.id = id;
     }
-
-    //bytys
-     public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
-    }
-    //bytys
     
     public String getNombre() {
         return nombre;
