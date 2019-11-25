@@ -75,11 +75,16 @@ public class CapacitacionMySQL implements CapacitacionDAO {
     }
 
     @Override
+    /*
+    -1 --> pendiente
+    1 --> aceptada
+    0--> no aceptada .... las acapaccitaciones
+    */
     public int actualizar(Capacitacion capacitacion) {
         int resultado=0;
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            cs = con.prepareCall("{call ACTUALIZAR_CAPACITACION(?,?,?,?,?,?,?,?)}");
+            cs = con.prepareCall("{call ACTUALIZAR_CAPACITACION(?,?,?,?,?,?,?,?,?)}");
             cs.setInt("_ID_CAPACITACION", capacitacion.getId());
             cs.setString("_NOMBRE", capacitacion.getNombre());
             cs.setString("_DESCRIPCION", capacitacion.getDescripcion());
@@ -94,6 +99,7 @@ public class CapacitacionMySQL implements CapacitacionDAO {
             cs.setDate("_FECHA_FIN", date2);
             cs.setDate("_INICIO_INSCRIPCION", date3);
             cs.setDate("_FIN_INSCRIPCION", date4);
+            cs.setInt("_ESTADO", capacitacion.getEstado()); //c agrego esto
             
             // UPDATE DE TODOS LOS DIAS DE LA CAPACITACION
             if (capacitacion.getListaDiasCapacitacion() != null) {
@@ -180,6 +186,7 @@ public class CapacitacionMySQL implements CapacitacionDAO {
                 capa.setFecha_fin(rs.getDate("FECHA_FIN"));
                 capa.setInicio_inscripcion(rs.getDate("INICIO_INSCRIPCION"));
                 capa.setFin_inscripcion(rs.getDate("FIN_INSCRIPCION"));
+             
                 
                 // AÑADIENDO TODOS LOS DIAS DE LA CAPACITACION
                 ArrayList<Dia_Capacitacion> dias_capacitacion = new ArrayList<>();
@@ -235,5 +242,40 @@ public class CapacitacionMySQL implements CapacitacionDAO {
         }
         return capacitaciones;
     }
+
+//    @Override
+//    public ArrayList<Capacitacion> listarMisCapasAceptadas(int idPersonal,int estado) {
+//    ArrayList<Capacitacion> capa = new ArrayList<>();
+//        try {
+//            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+//            CallableStatement cStmt = con.prepareCall("{call LISTAR_HORAS_LIBRE_DE_PERSONAL(?,?)}");
+//            cStmt.setInt("_ID_PERSONAL", idPersonal);
+//            cStmt.setInt("_JUSTIFICADO", estado);
+//                    
+//            ResultSet rs=cStmt.executeQuery();
+//            while (rs.next()) {
+//                Inasistencia e = new Inasistencia();
+//                e.setId(rs.getInt("ID_INASISTENCIA"));
+//                e.setFecha(rs.getDate("FECHA"));
+//                e.setHoraFin(rs.getTime("HORA_FIN"));
+//                e.setHoraInicio(rs.getTime("HORA_INICIO"));
+//                e.setMotivo(rs.getString("MOTIVO"));
+//                e.setJustificado(rs.getInt("JUSTIFICADO"));
+//                
+//                horasLibre.add(e);
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        } finally {
+//            try {
+//                con.close();
+//            } catch (SQLException ex) {
+//                System.out.println(ex.getMessage());
+//            }
+//        }
+//        return horasLibre;  
+//    }
+
+    
 
 }

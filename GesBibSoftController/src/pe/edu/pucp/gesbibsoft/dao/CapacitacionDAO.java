@@ -18,4 +18,7 @@ public interface CapacitacionDAO {
     int eliminar(int idCapacitacion);
 
     ArrayList<Capacitacion> listar();
+    
+    //bytys
+    //ArrayList<Capacitacion> listarMisCapasAceptadas();
 }

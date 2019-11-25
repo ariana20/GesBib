@@ -98,6 +98,9 @@ public class Servicio {
     public ArrayList<Capacitacion> listarCapacitaciones(){
         return DBController.listarCapacitacion();
     }
+    
+   
+    
     @WebMethod(operationName = "actualizarCapacitacion")
     public int actualizarCapacitacion(@WebParam(name = "capacitacion") Capacitacion capacitacion){
         return DBController.actualizarCapacitacion(capacitacion);

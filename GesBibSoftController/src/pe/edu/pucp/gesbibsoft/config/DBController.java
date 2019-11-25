@@ -129,6 +129,7 @@ public abstract class DBController {
     public static int actualizarCapacitacion(Capacitacion capacitacion) {
         return daoFact.getCapacitacionDAO().actualizar(capacitacion);
     }
+   
 
     public static int elimCapacitacion(int idCapacitacion) {
         return daoFact.getCapacitacionDAO().eliminar(idCapacitacion);
@@ -137,6 +138,8 @@ public abstract class DBController {
     public static ArrayList<Capacitacion> listarCapacitacion() {
         return daoFact.getCapacitacionDAO().listar();
     }
+    
+ 
 
     //DISTRIBUCION_PERSONAL
     public static void insertarDistribucionPersonal(DistribucionPersonal distrib_Per) {
