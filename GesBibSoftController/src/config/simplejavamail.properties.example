@@ -1,0 +1,12 @@
+# To change this license header, choose License Headers in Project Properties.
+# To change this template file, choose Tools | Templates
+# and open the template in the editor.
+
+simplejavamail.smtp.username=
+simplejavamail.smtp.password=
+simplejavamail.smtp.host=smtp.gmail.com
+simplejavamail.smtp.port=25
+
+# Para especificar de quien se envia el correo
+simplejavamail.defaults.from.name=GesBib Admin
+simplejavamail.defaults.from.address=admin@gesbib.pucp.edu.pe

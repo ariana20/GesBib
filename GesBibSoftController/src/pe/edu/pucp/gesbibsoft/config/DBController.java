@@ -371,6 +371,14 @@ public abstract class DBController {
         return daoFact.getPersonalDAO().hallarTipoUsuario(idUsuario);
     }
     
+    public static int enviarToken(String correo) {
+        return daoFact.getUsuarioDAO().enviarToken(correo);
+    }
+    
+    public static int cambiarContrasenaToken(String correo, String nuevaContrasena, String token) {
+        return daoFact.getUsuarioDAO().cambiarContrasenaToken(correo, nuevaContrasena, token);
+    }
+    
     // Utilitarios
     public static ArrayList<Personal> listarUsuariosLibres(Date fecha, String hora_inicio, String hora_fin, String nombre_perfil) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");

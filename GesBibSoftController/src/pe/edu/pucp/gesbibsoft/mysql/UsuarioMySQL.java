@@ -5,6 +5,7 @@
  */
 package pe.edu.pucp.gesbibsoft.mysql;
  
+import java.security.SecureRandom;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,6 +14,11 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
+import org.simplejavamail.email.Email;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.Mailer;
+import org.simplejavamail.mailer.MailerBuilder;
+import org.simplejavamail.util.ConfigLoader;
 import pe.edu.pucp.gesbibsoft.config.DBManager;
 import pe.edu.pucp.gesbibsoft.dao.UsuarioDAO;
 import pe.edu.pucp.gesbibsoft.model.Usuario;
@@ -107,4 +113,70 @@ public class UsuarioMySQL implements UsuarioDAO{
         return listaPersonal;
     }
     
+    @Override
+    public int enviarToken(String correo) {
+        int resultado = 0;
+        // Se crea el token de 6 dígitos
+        SecureRandom random = new SecureRandom();
+        String token = String.format("%06d", random.nextInt(999999));
+        
+        // Se actualiza el token en la DB
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cs = con.prepareCall("{call ACTUALIZAR_TOKEN_USUARIO(?, ?)}");
+            cs.setString("_EMAIL", correo);
+            cs.setString("_TOKEN", token);
+            cs.executeQuery();
+            resultado = 1;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        
+        if(resultado == 1) {
+            // Se instancian las clases para el envío del mail
+            ConfigLoader.loadProperties("config/simplejavamail.properties", true);
+            Mailer mailer = MailerBuilder.buildMailer();
+
+            Email email = EmailBuilder.startingBlank()
+                .to(correo)
+                .withSubject("Token de recuperación - GesBib")
+                .withPlainText("Su token de recuperación es: " + token)
+                .buildEmail();
+
+            mailer.sendMail(email);
+        }
+        
+        return resultado;
+    }
+
+    @Override
+    public int cambiarContrasenaToken(String correo, String nuevaContrasena, String token) {
+        int resultado = 0;
+        
+        // Se actualiza la contraseña en la BD
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cs = con.prepareCall("{call ACTUALIZAR_CONTRASENA_USUARIO(?, ?, ?)}");
+            cs.setString("_EMAIL", correo);
+            cs.setString("_PASSWORD_NUEVO", nuevaContrasena);
+            cs.setString("_TOKEN", token);
+            cs.executeQuery();
+            resultado = 1;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return resultado;
+    }
 }

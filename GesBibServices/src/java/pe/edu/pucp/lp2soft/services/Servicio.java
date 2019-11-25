@@ -169,6 +169,17 @@ public class Servicio {
         return DBController.asignarPerfil(personalBiblioteca, perfilExperiencia);
     }
     
+    @WebMethod(operationName = "enviarToken")
+    public int enviarToken(@WebParam(name = "correo") String correo){
+        return DBController.enviarToken(correo);
+    }
+    
+    @WebMethod(operationName = "cambiarContrasenaToken")
+    public int cambiarContrasenaToken(@WebParam(name = "correo") String correo, @WebParam(name = "nuevaContrasena") String nuevaContrasena,
+            @WebParam(name = "token") String token) {
+        return DBController.cambiarContrasenaToken(correo, nuevaContrasena, token);
+    }
+    
     //BIBLIOTECARIO
     @WebMethod(operationName = "insertarBibliotecario")
     public int insertarBibliotecario(@WebParam(name = "bibliotecario") Bibliotecario bibliotecario){

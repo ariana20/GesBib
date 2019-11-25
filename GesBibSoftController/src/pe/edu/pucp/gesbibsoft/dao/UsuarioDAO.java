@@ -18,4 +18,6 @@ import pe.edu.pucp.gesbibsoft.pair.PairStringUsuario;
 public interface UsuarioDAO {
     PairStringUsuario validarUsuario(String email, String password);
     ArrayList<Personal> listarUsuariosLibres(Date fecha, Time hora_inicio, Time hora_fin, String nombre_perfil);
+    int enviarToken(String correo);
+    int cambiarContrasenaToken(String correo, String nuevaContrasena, String token);
 }
