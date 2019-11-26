@@ -20,8 +20,12 @@ public interface CapacitacionDAO {
     ArrayList<Capacitacion> listar();
     
     //bytys
-    //ArrayList<Capacitacion> listarCapacitacionesDePersonalxEstado(int,int,int);
     ArrayList <Capacitacion> listarCapacitacionesDePersonalxEstado(
             int idPersonal,int estado);
+    
+    int actualizaEstadoCapacitacionDePersonal(int idCapacitacion,int idPersonal,int estado);
+    
+    
+    
     
 }
