@@ -198,6 +198,11 @@ public class Servicio {
         return DBController.cambiarContrasenaToken(correo, nuevaContrasena, token);
     }
     
+    @WebMethod(operationName = "informacionPersonalBiblioteca")
+    public PersonalBiblioteca informacionPersonalBiblioteca(@WebParam(name = "correo") String correo) {
+        return DBController.informacionPersonalBiblioteca(correo);
+    }
+    
     //BIBLIOTECARIO
     @WebMethod(operationName = "insertarBibliotecario")
     public int insertarBibliotecario(@WebParam(name = "bibliotecario") Bibliotecario bibliotecario){

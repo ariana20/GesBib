@@ -391,6 +391,10 @@ public abstract class DBController {
         return daoFact.getUsuarioDAO().cambiarContrasenaToken(correo, nuevaContrasena, token);
     }
     
+    public static PersonalBiblioteca informacionPersonalBiblioteca(String correo) {
+        return daoFact.getPersonalBibliotecaDAO().informacionPersonalBiblioteca(correo);
+    }
+    
     public static int eliminarPersonal(int idPersonal) {
         return daoFact.getPersonalBibliotecaDAO().eliminar(idPersonal);
     }

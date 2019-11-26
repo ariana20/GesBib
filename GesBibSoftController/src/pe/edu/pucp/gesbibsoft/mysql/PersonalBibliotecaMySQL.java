@@ -169,4 +169,36 @@ public class PersonalBibliotecaMySQL implements PersonalBibliotecaDAO{
         return resul;
     }
     
+    @Override
+    public PersonalBiblioteca informacionPersonalBiblioteca(String correo) {
+        PersonalBiblioteca perBib = null;
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cs = con.prepareCall("{call GET_INFORMACION_PERSONAL_BIBLIOTECA(?)}");
+            cs.setString("_EMAIL", correo);
+            ResultSet rs = cs.executeQuery();
+            if(rs.next()) {
+                perBib = new PersonalBiblioteca();
+                perBib.setId(rs.getInt("ID_USUARIO"));
+                perBib.setNombre(rs.getString("NOMBRE"));
+                perBib.setApellido(rs.getString("APELLIDO"));
+                perBib.setEmail(rs.getString("EMAIL"));
+                perBib.setCodigo(rs.getString("CODIGO"));
+                perBib.setFecha_ingreso(rs.getDate("FECHA_INGRESO"));
+                perBib.setTotalHorasExtra(rs.getFloat("TOTAL_HORA_EXTRA"));
+                perBib.setFoto(rs.getBytes("FOTO"));
+                Biblioteca bib = new Biblioteca(rs.getString("NOMBRE_BIBLIOTECA"));
+                perBib.setBiblioteca(bib);
+            }
+        } catch ( SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return perBib;
+    }
 }

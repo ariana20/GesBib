@@ -19,4 +19,5 @@ public interface PersonalBibliotecaDAO {
     ArrayList<PersonalBiblioteca> listar(String nombre, String apellido);
 
     public int eliminar(int idPersonal);
+    public PersonalBiblioteca informacionPersonalBiblioteca(String correo);
 }
