@@ -33,6 +33,8 @@ public class BibliotecaMySQL implements BibliotecaDAO {
             cs.setString("_NOMBRE", biblioteca.getNombre());
             if(biblioteca.getGestor()!=null)
                 cs.setInt("_ID_GESTOR",biblioteca.getGestor().getId());
+            else
+                cs.setInt("_ID_GESTOR",-1);
             cs.registerOutParameter("_ID_BIBLIOTECA", java.sql.Types.INTEGER);
             cs.executeUpdate();
             biblioteca.setId(cs.getInt("_ID_BIBLIOTECA"));
