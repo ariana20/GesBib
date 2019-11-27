@@ -20,4 +20,6 @@ public interface UsuarioDAO {
     ArrayList<Personal> listarUsuariosLibres(Date fecha, Time hora_inicio, Time hora_fin, String nombre_perfil);
     int enviarToken(String correo);
     int cambiarContrasenaToken(String correo, String nuevaContrasena, String token);
+    int cambiarContrasenaConfig(int id, String nuevaContrasena);
+    int actualizarDatosUsuario(int id,String nombre, String apellido, String correo, byte[] foto);
 }

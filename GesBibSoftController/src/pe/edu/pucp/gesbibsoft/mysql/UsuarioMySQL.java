@@ -180,4 +180,56 @@ public class UsuarioMySQL implements UsuarioDAO{
         }
         return resultado;
     }
+    
+    @Override
+    public int cambiarContrasenaConfig(int id, String nuevaContrasena) {
+        int resultado = 0;
+        
+        // Se actualiza la contraseña en la BD
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cs = con.prepareCall("{call ACTUALIZAR_CONTRASENA_USUARIO_CONFIG(?, ?, ?)}");
+            cs.setInt("_ID", id);
+            cs.setString("_PASSWORD_NUEVO", nuevaContrasena);
+            cs.executeQuery();
+            resultado = 1;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return resultado;
+    }
+    
+    @Override
+    public int actualizarDatosUsuario(int id,String nombre, String apellido,String correo,byte[] foto) {
+        int resultado = 0;
+        
+        // Se actualizan los datos en la BD
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cs = con.prepareCall("{call ACTUALIZAR_DATOS_PERSONAL_CONFIG(?, ?, ?,?,?)}");
+            cs.setInt("_ID_PERSONAL",id);
+            cs.setString("_NOMBRE", nombre);
+            cs.setString("_APELLIDO", apellido);
+            cs.setString("_EMAIL", correo);
+            cs.setBytes("_FOTO", foto);
+            cs.executeQuery();
+            resultado = 1;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return resultado;
+    }
+    
 }
