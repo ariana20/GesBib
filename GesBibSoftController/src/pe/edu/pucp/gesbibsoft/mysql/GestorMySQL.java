@@ -150,4 +150,33 @@ public class GestorMySQL implements GestorDAO {
         return gestores;
     }
 
+    @Override
+    public Biblioteca getBiblioteca(int idGestor) {
+        Biblioteca bib=new Biblioteca();
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cs = con.prepareCall("{call GET_BIBLIOTECA(?,?,?)}");
+            cs.setInt("_ID_GESTOR", idGestor);
+            
+            cs.registerOutParameter("_ID_BIBLIOTECA", java.sql.Types.INTEGER);
+            cs.registerOutParameter("_NOMBRE_BIBLIOTECA", java.sql.Types.VARCHAR);
+            
+            cs.executeUpdate();
+            bib.setId(cs.getInt("_ID_BIBLIOTECA"));
+            bib.setNombre(cs.getString("_NOMBRE_BIBLIOTECA"));
+            
+            
+  
+        } catch ( SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return bib;
+    }
+
 }

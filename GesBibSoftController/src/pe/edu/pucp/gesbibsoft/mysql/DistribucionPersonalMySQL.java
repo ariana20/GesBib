@@ -11,7 +11,9 @@ import java.util.Date;
 import pe.edu.pucp.gesbibsoft.config.DBManager;
 import pe.edu.pucp.gesbibsoft.dao.DistribucionPersonalDAO;
 import pe.edu.pucp.gesbibsoft.model.DistribucionPersonal;
+import pe.edu.pucp.gesbibsoft.model.PerfilExperiencia;
 import pe.edu.pucp.gesbibsoft.model.Personal;
+import pe.edu.pucp.gesbibsoft.model.PersonalBiblioteca;
 import pe.edu.pucp.gesbibsoft.model.PuntosAtencion;
 
 public class DistribucionPersonalMySQL implements DistribucionPersonalDAO {
@@ -116,26 +118,36 @@ public class DistribucionPersonalMySQL implements DistribucionPersonalDAO {
     }
     
     @Override
-    public ArrayList<PuntosAtencion> listarPorFechaHora(int idPuntoAtencion, Date fecha, Time hora_ini, Time hora_fin) {
-        ArrayList<PuntosAtencion> listaPas = new ArrayList<>();
+    public ArrayList<DistribucionPersonal> listarPorFechaHora(int idPuntoAtencion, Date fechaIni, Date fechaFin) {
+        ArrayList<DistribucionPersonal> listaPas = new ArrayList<>();
         try{
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            CallableStatement cStmt = con.prepareCall("{call LISTAR_DISTRIBUCIONES_POR_FECHA_HORA(?,?,?)}");
+            CallableStatement cStmt = con.prepareCall("{call LISTAR_DISTRIBUCION_POR_FECHA_PUNTO_ATENCION(?,?,?)}");
             cStmt.setInt("_ID_PUNTO_ATENCION", idPuntoAtencion);
-            cStmt.setDate("_FECHA", (java.sql.Date) fecha);
-            cStmt.setTime("_HORA_INI", hora_ini);
-            cStmt.setTime("_HORA_FIN", hora_fin);
+            cStmt.setDate("_FECHA_INI", new java.sql.Date( fechaIni.getTime()));
+            cStmt.setDate("_FECHA_FIN", new java.sql.Date( fechaFin.getTime()));
+            
             
             ResultSet rs=cStmt.executeQuery();
             while(rs.next()){
+                PersonalBiblioteca personalBib=new PersonalBiblioteca();
                 DistribucionPersonal dp = new DistribucionPersonal();
-                PuntosAtencion pa = new PuntosAtencion();
                 
+                dp.setPersonal(personalBib);
                 dp.getPersonal().setId(rs.getInt("ID_USUARIO"));
                 dp.getPersonal().setNombre(rs.getString("NOMBRE"));
                 dp.getPersonal().setApellido(rs.getString("APELLIDO"));
-                pa.setId(rs.getInt("ID_PUNTO_ATENCION"));
-                pa.setNombre(rs.getString("PA_NOMBRE"));
+                dp.getPersonal().setCodigo(rs.getString("CODIGO"));
+                dp.setFecha(rs.getDate("FECHA"));
+                dp.setHoraInicio(rs.getTime("HORA_INICIO"));
+                dp.setHoraFin(rs.getTime("HORA_FIN"));
+              
+                PerfilExperiencia p=new PerfilExperiencia();
+                p.setNombrePerfil(rs.getString("NOMBRE_PERFIL"));
+                personalBib.addPerfil(p);
+                listaPas.add(dp);
+                
+                
                 
             }
         }catch(SQLException ex){

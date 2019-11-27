@@ -163,17 +163,18 @@ public abstract class DBController {
     public static ArrayList<DistribucionPersonal> listarDistribucionPersonal(int idPersonal,Date fechaIni, Date fechaFin) {
         return daoFact.getDistribucionPersonalDAO().listarPorPersonal(idPersonal, fechaIni, fechaFin);
     }
-    public static ArrayList<PuntosAtencion> listarDistribucionPersonalPorFechaHora(int idPersonal, int idPuntoAtencion,
-            Date fecha, String horaIni, String horaFin) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-        long ms1 = sdf.parse(horaIni).getTime();
-        Time horaI = new Time(ms1);
-        long ms2 = sdf.parse(horaFin).getTime();
-        Time horaF = new Time(ms2);
-        return daoFact.getDistribucionPersonalDAO().listarPorFechaHora(idPuntoAtencion, fecha, horaI, horaF);
+//    public static ArrayList<PuntosAtencion> listarDistribucionPersonalPorFechaHora(int idPersonal, int idPuntoAtencion,
+//            Date fecha, String horaIni, String horaFin) throws ParseException {
+//        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+//        long ms1 = sdf.parse(horaIni).getTime();
+//        Time horaI = new Time(ms1);
+//        long ms2 = sdf.parse(horaFin).getTime();
+//        Time horaF = new Time(ms2);
+//        return daoFact.getDistribucionPersonalDAO().listarPorFechaHora(idPuntoAtencion, fecha, horaI, horaF);
+//    }
+    public static ArrayList<DistribucionPersonal> listarDistribucionPersonalPorFecha(int idPuntoAtencion, Date fechaIni, Date fechaFin) {
+        return daoFact.getDistribucionPersonalDAO().listarPorFechaHora(idPuntoAtencion, fechaIni, fechaFin);
     }
-
-
     //GESTOR
     public static int insertarGestor(Gestor gestor) {
         return daoFact.getGestorDAO().insertar(gestor);
@@ -191,6 +192,10 @@ public abstract class DBController {
         return daoFact.getGestorDAO().listar( nombre,  apellido);
     }
 
+    public static Biblioteca getBibliotecaGestor(int idGestor) {
+        return daoFact.getGestorDAO().getBiblioteca(idGestor);
+    }
+        
     //HORA_EXTRA    
     public static int insertarHoraExtra(HoraExtra horaEx) {
         return daoFact.getHoraExtraDAO().insertar(horaEx);
@@ -394,6 +399,7 @@ public abstract class DBController {
     public static int eliminarPersonal(int idPersonal) {
         return daoFact.getPersonalBibliotecaDAO().eliminar(idPersonal);
     }
+    
     // Utilitarios
     public static ArrayList<Personal> listarUsuariosLibres(Date fecha, String hora_inicio, String hora_fin, String nombre_perfil) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
@@ -403,5 +409,9 @@ public abstract class DBController {
         Time horaF = new Time(ms2);
         return daoFact.getUsuarioDAO().listarUsuariosLibres(fecha, horaI, horaF, nombre_perfil);
     }
+
+
+
+
 
 }

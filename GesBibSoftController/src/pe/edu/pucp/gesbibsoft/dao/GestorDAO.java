@@ -1,6 +1,7 @@
 package pe.edu.pucp.gesbibsoft.dao;
 
 import java.util.ArrayList;
+import pe.edu.pucp.gesbibsoft.model.Biblioteca;
 import pe.edu.pucp.gesbibsoft.model.Gestor;
 
 public interface GestorDAO {
@@ -12,4 +13,6 @@ public interface GestorDAO {
     int eliminar(int idGestor);
 
     ArrayList<Gestor> listar(String nombre, String apellido);
+
+    public Biblioteca getBiblioteca(int idGestor);
 }

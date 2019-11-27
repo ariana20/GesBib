@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import pe.edu.pucp.gesbibsoft.config.DBManager;
 import pe.edu.pucp.gesbibsoft.dao.PuntosAtencionDAO;
+import pe.edu.pucp.gesbibsoft.model.PerfilExperiencia;
 import pe.edu.pucp.gesbibsoft.model.PuntosAtencion;
 
 /**
@@ -110,18 +111,21 @@ public class PuntosAtencionMySQL implements PuntosAtencionDAO {
         ArrayList<PuntosAtencion> listaPuntosAtencion = new ArrayList<>();
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            CallableStatement cStmt = con.prepareCall("{call LISTAR_PUNTOS_ATENCION(?)}");
-            cStmt.setInt("ID_BIBLIOTECA", idBiblioteca);
+            CallableStatement cStmt = con.prepareCall("{call LISTAR_PUNTOS_ATENCION_X_BIBLIO(?)}");
+            cStmt.setInt("_ID_BIBLIOTECA", idBiblioteca);
             
             ResultSet rs=cStmt.executeQuery();
             while (rs.next()) {
                 PuntosAtencion e = new PuntosAtencion();
+                PerfilExperiencia pe=new PerfilExperiencia();
+                e.setPerfilExperiencia(pe);
                 e.setId(rs.getInt("ID_PUNTO_ATENCION"));
                 e.setPiso(rs.getInt("PISO"));
                 e.setNombre(rs.getString("NOMBRE"));
                 e.setCant_min_pers(rs.getInt("CANTIDAD_MIN_PERSONAL"));
                 e.setCant_opt_pers(rs.getInt("CANTIDAD_OPT_PERSONAL"));
                 e.getPerfilExperiencia().setId(rs.getInt("ID_PERFIL_EXPERIENCIA"));
+                e.getPerfilExperiencia().setNombrePerfil(rs.getString("NOMBRE_PERFIL"));
                 listaPuntosAtencion.add(e);
             }
         } catch (SQLException ex) {

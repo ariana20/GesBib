@@ -12,6 +12,9 @@ public class PersonalBiblioteca extends Personal {
     //private DiaSemana diaSemana;
     
     // ATRIBUTOS ASOCIACIONES
+    public void setListaPerfiles(ArrayList<PerfilExperiencia> listaPerfiles) {
+        this.listaPerfiles = listaPerfiles;
+    }
     private ArrayList<PerfilExperiencia> listaPerfiles;
     
     // GETTERS Y SETTERS 

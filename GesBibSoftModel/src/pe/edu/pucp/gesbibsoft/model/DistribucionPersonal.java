@@ -17,6 +17,7 @@ public class DistribucionPersonal {
     
     // CONSTRUCTORES
     public DistribucionPersonal() {
+        //this.personal=new Personal();
     }
 
     public DistribucionPersonal(Date fecha, Time horaInicio, Time horaFin) {
