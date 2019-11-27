@@ -114,9 +114,7 @@ public class Servicio {
     public int insertarPerfilExperiencia(@WebParam(name = "perfilExperiencia") PerfilExperiencia perfilExperiencia) {
         return DBController.insertarPerfilExperiencia(perfilExperiencia);
     }
-<<<<<<< HEAD
 
-=======
     
     @WebMethod(operationName = "actualizarPerfilExperiencia")
     public void actualizarPerfilExperiencia(@WebParam(name = "perfilExperiencia") PerfilExperiencia perfilExperiencia){
@@ -128,7 +126,7 @@ public class Servicio {
         DBController.elimPerfilExperiencia(idPerfilExperiencia);
     }
     
->>>>>>> Daniel
+
     @WebMethod(operationName = "listarPerfilExperiencia")
     public ArrayList<PerfilExperiencia> listarPerfilExperiencia() {
         return DBController.listarPerfilExperiencia();
@@ -449,6 +447,7 @@ public class Servicio {
         DBController.insertarDistribucionPersonal(distrib_Per);
     }
     
+
     
     // REPORTEEEEEES AEEEEA
     @WebMethod(operationName = "generarReporteInasistencias")
@@ -507,4 +506,17 @@ public class Servicio {
 	}
 	return arreglo;
     }
+
+    //bytys
+     @WebMethod(operationName = "listarDistribPersonalenFecha")
+    public ArrayList<DistribucionPersonal> listarDistribPersonalenFecha(
+            @WebParam(name = "id_Personal") int id_Personal,
+            @WebParam(name = "fecha") Date fecha ) {
+        return DBController.listarDistribPersonalenFecha(id_Personal,fecha);
+    }    
+    //bytys
+    
+    
+    
+
 }

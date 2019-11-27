@@ -182,6 +182,18 @@ public abstract class DBController {
     public static ArrayList<DistribucionPersonal> listarDistribucionPersonalPorFecha(int idPuntoAtencion, Date fechaIni, Date fechaFin) {
         return daoFact.getDistribucionPersonalDAO().listarPorFechaHora(idPuntoAtencion, fechaIni, fechaFin);
     }
+
+
+    //byTyS
+    public static ArrayList<DistribucionPersonal> listarDistribPersonalenFecha(
+            int idPersonal,Date fecha) {
+        return daoFact.getDistribucionPersonalDAO().listarDistribPersonalenFecha(
+                idPersonal, fecha);
+    }
+    
+    //byTyS
+
+
     //GESTOR
     public static int insertarGestor(Gestor gestor) {
         return daoFact.getGestorDAO().insertar(gestor);
