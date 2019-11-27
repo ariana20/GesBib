@@ -46,13 +46,12 @@ public class CapacitacionMySQL implements CapacitacionDAO {
             // INSERTANDO TODOS LOS DIAS DE LA CAPACITACION EN LA INSTANCIA DE CAPACITACION
             if (capacitacion.getListaDiasCapacitacion() != null) {
                 for(Dia_Capacitacion dia_capa : capacitacion.getListaDiasCapacitacion()) {
-                    CallableStatement cs2 = con.prepareCall("{call INSERTAR_DIA_CAPACITACION(?,?,?,?,?,?)}");
+                    CallableStatement cs2 = con.prepareCall("{call INSERTAR_DIA_CAPACITACION(?,?,?,?,?)}");
                     
-                    cs2.setInt("_ID_CAPACITACION", dia_capa.getCapacitacion().getId());
+                    cs2.setInt("_ID_CAPACITACION", capacitacion.getId());
                     cs2.setTime("_HORA_INI", new java.sql.Time(dia_capa.getHora_ini().getTime()));
                     cs2.setTime("_HORA_FIN", new java.sql.Time(dia_capa.getHora_fin().getTime()));
                     cs2.setDate("_FECHA", new java.sql.Date(dia_capa.getFecha().getTime()));
-                    cs2.setInt("_ACTIVO", 1);
 
                     cs2.registerOutParameter("_ID_DIA_CAPACITACION", java.sql.Types.INTEGER);
 
@@ -100,27 +99,22 @@ public class CapacitacionMySQL implements CapacitacionDAO {
             cs.setDate("_INICIO_INSCRIPCION", date3);
             cs.setDate("_FIN_INSCRIPCION", date4);
             
-            // UPDATE DE TODOS LOS DIAS DE LA CAPACITACION
+            // INSERTANDO TODOS LOS DIAS DE LA CAPACITACION EN LA INSTANCIA DE CAPACITACION
             if (capacitacion.getListaDiasCapacitacion() != null) {
-                for (Dia_Capacitacion dia_capa : capacitacion.getListaDiasCapacitacion()) {
-                    CallableStatement cs2 = con.prepareCall("{call ACTUALIZAR_DIA_CAPACITACION(?,?,?,?,?,?)}");
-    
-                    cs2.setInt("_ID_DIA_CAPACITACION", dia_capa.getIdDiaCapacitacion());
-                    cs2.setInt("_ID_CAPACITACION", dia_capa.getCapacitacion().getId());
-                    java.sql.Time time1 = new java.sql.Time(dia_capa.getHora_ini().getTime());
-                    java.sql.Time time2 = new java.sql.Time(dia_capa.getHora_fin().getTime());
-                    java.sql.Date date_x = new java.sql.Date(dia_capa.getFecha().getTime());
+                for(Dia_Capacitacion dia_capa : capacitacion.getListaDiasCapacitacion()) {
+                    CallableStatement cs2 = con.prepareCall("{call INSERTAR_DIA_CAPACITACION(?,?,?,?,?)}");
+                    
+                    cs2.setInt("_ID_CAPACITACION", capacitacion.getId());
+                    cs2.setTime("_HORA_INI", new java.sql.Time(dia_capa.getHora_ini().getTime()));
+                    cs2.setTime("_HORA_FIN", new java.sql.Time(dia_capa.getHora_fin().getTime()));
+                    cs2.setDate("_FECHA", new java.sql.Date(dia_capa.getFecha().getTime()));
 
-                    cs2.setTime("_HORA_INI", time1);
-                    cs2.setTime("_HORA_FIN", time2);
-                    cs2.setDate("_FECHA", date_x);
-                    //cs2.setInt("_ACTIVO", dia_capa.getActivo());
+                    cs2.registerOutParameter("_ID_DIA_CAPACITACION", java.sql.Types.INTEGER);
 
                     cs2.executeUpdate();
+                    dia_capa.setIdDiaCapacitacion(cs2.getInt("_ID_DIA_CAPACITACION"));
                 }
             }
-            
-            cs.executeUpdate();
             resultado=1;
 
         } catch ( SQLException ex) {
