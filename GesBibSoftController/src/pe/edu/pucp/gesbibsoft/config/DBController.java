@@ -378,6 +378,10 @@ public abstract class DBController {
     public static ArrayList<PersonalBiblioteca> listarPersonalBiblioteca(String nombre, String apellido){
         return daoFact.getPersonalBibliotecaDAO().listar(nombre, apellido);
     }
+    
+    public static ArrayList<PersonalBiblioteca> listar_todo_sobre_personal(String nombre){
+        return daoFact.getPersonalBibliotecaDAO().listar_todo_sobre_personal(nombre);
+    }
 
     public static String hallarTipoUsuario(int idUsuario) {
         return daoFact.getPersonalDAO().hallarTipoUsuario(idUsuario);

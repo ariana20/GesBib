@@ -186,6 +186,13 @@ public class Servicio {
     public ArrayList<PersonalBiblioteca> listarPersonalBiblioteca(@WebParam(name = "nombre") String nombre, @WebParam(name = "apellido")  String apellido){
         return DBController.listarPersonalBiblioteca(nombre, apellido);
     }
+    
+    
+     @WebMethod(operationName = "listartodosobrepersonal")
+    public ArrayList<PersonalBiblioteca> listar_todo_sobre_personal(@WebParam(name = "nombre") String nombre){
+        return DBController.listar_todo_sobre_personal(nombre);
+    }
+    
     @WebMethod(operationName = "eliminarPersonalBiblioteca")
     public int eliminarPersonalBiblioteca(@WebParam(name = "idPersonal") int idPersonal){
         return DBController.eliminarPersonal(idPersonal);

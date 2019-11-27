@@ -20,4 +20,5 @@ public interface PersonalBibliotecaDAO {
 
     public int eliminar(int idPersonal);
     public PersonalBiblioteca informacionPersonalBiblioteca(String correo);
+    ArrayList<PersonalBiblioteca> listar_todo_sobre_personal(String nombre);
 }
