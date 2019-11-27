@@ -130,6 +130,13 @@ public abstract class DBController {
         return daoFact.getCapacitacionDAO().actualizar(capacitacion);
     }
    
+    
+    //by tys
+    public static int actualizaEstadoCapacitacionDePersonal(int idCapacitacion, int idPersonal, int estado) {
+        return daoFact.getCapacitacionDAO().actualizaEstadoCapacitacionDePersonal(idCapacitacion,idPersonal,estado);
+    }
+        
+    
 
     public static int elimCapacitacion(int idCapacitacion) {
         return daoFact.getCapacitacionDAO().eliminar(idCapacitacion);

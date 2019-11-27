@@ -275,6 +275,30 @@ public class CapacitacionMySQL implements CapacitacionDAO {
         return capacitaciones;  
     }
 
+    @Override
+    public int actualizaEstadoCapacitacionDePersonal(int idCapacitacion, int idPersonal, int estado) {
+    int resultado=0;
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            cs = con.prepareCall("{call ACTUALIZAR_ESTADO_PERSONALCAPACITACION(?,?,?)}");
+            cs.setInt("_ID_CAPACITACION", idCapacitacion);
+            cs.setInt("_ID_PERSONAL", idPersonal);
+            cs.setInt("_ESTADO", estado);
+           
+            cs.executeUpdate();
+            resultado=1;
+
+        } catch ( SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return resultado;}
+
 
 
     
