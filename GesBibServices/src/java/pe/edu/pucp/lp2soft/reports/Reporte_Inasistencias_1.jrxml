@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_Inasistencias" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3d1cf6fd-460b-4ef4-adfe-6501daf19279">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GesBibSoft"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="ID_USUARIO" class="java.lang.Integer"/>
+	<parameter name="FECHA_INICIO" class="java.sql.Date"/>
+	<parameter name="FECHA_FIN" class="java.sql.Date"/>
+	<queryString>
+		<![CDATA[SELECT TI.NOMBRE, I.ID_INASISTENCIA, I.FECHA, I.HORA_INICIO, I.HORA_FIN, U.NOMBRE AS U_NOMBRE, U.APELLIDO
+FROM INASISTENCIA I
+JOIN USUARIO U
+ON U.ID_USUARIO=$P{ID_USUARIO} AND U.ID_USUARIO = I.ID_PERSONAL AND I.FECHA>=$P{FECHA_INICIO} AND  I.FECHA<=$P{FECHA_FIN}
+JOIN TIPO_INASISTENCIA TI
+ON TI.ID_TIPO_INASISTENCIA = I.ID_TIPO_INASISTENCIA]]>
+	</queryString>
+	<field name="NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="TIPO_INASISTENCIA"/>
+	</field>
+	<field name="ID_INASISTENCIA" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ID_INASISTENCIA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="INASISTENCIA"/>
+	</field>
+	<field name="FECHA" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="FECHA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="INASISTENCIA"/>
+	</field>
+	<field name="HORA_INICIO" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.label" value="HORA_INICIO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="INASISTENCIA"/>
+	</field>
+	<field name="HORA_FIN" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.label" value="HORA_FIN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="INASISTENCIA"/>
+	</field>
+	<field name="U_NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="U_NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="USUARIO"/>
+	</field>
+	<field name="APELLIDO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="APELLIDO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="USUARIO"/>
+	</field>
+	<variable name="U_NOMBRE1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{U_NOMBRE}]]></variableExpression>
+	</variable>
+	<variable name="APELLIDO1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{APELLIDO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="96" splitType="Stretch">
+			<textField>
+				<reportElement x="180" y="10" width="200" height="30" uuid="b0640ce0-d38a-4202-8153-0195576d1bbf"/>
+				<textFieldExpression><![CDATA["REPORTE DE INASISTENCIAS"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="40" width="100" height="30" uuid="96b47a7f-2f71-4ff3-b960-2723d30cc132">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cc9d9a13-a9df-4cc6-8ece-16703a0a95a9"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{U_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="40" width="100" height="30" uuid="b3e50ab3-81a1-4253-81ef-8df1556a2a49">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7236c73b-4cd0-4277-944c-fe1831dacf49"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{APELLIDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="2" width="60" height="30" uuid="c3c1b3a0-e834-4f54-96d3-b2f8c2d6d301"/>
+				<textFieldExpression><![CDATA["ID Usuario: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="2" width="60" height="30" uuid="d7a317cc-f90c-42e3-b225-6ffc90676c37"/>
+				<textFieldExpression><![CDATA[$P{ID_USUARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="70" height="30" uuid="2fa0d6ca-298d-4efe-acbf-581a52d52e9b"/>
+				<textFieldExpression><![CDATA["Fecha inicio: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="60" height="30" uuid="1b689de2-7da4-46df-a4d6-84fe5e6f6ab4"/>
+				<textFieldExpression><![CDATA["Fecha fin: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="90" height="30" uuid="bd43cc80-cb07-44b1-bc30-d93dea9905e1"/>
+				<textFieldExpression><![CDATA[$P{FECHA_INICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="0" width="100" height="30" uuid="6cd5035b-65de-4cb2-a0a8-0ad9b95c01b1"/>
+				<textFieldExpression><![CDATA[$P{FECHA_FIN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="71" splitType="Stretch">
+			<staticText>
+				<reportElement x="56" y="10" width="100" height="30" uuid="ccacf783-2f2b-4f3f-8f76-b490dc8a94c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="79452129-321f-4602-8411-9a77ec951e5b"/>
+				</reportElement>
+				<box padding="7">
+					<pen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="10" width="100" height="30" uuid="b9af5296-a011-40f9-aea1-a630643dd9ad">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e83c6802-21d7-4a2f-90d6-fe38a7211850"/>
+				</reportElement>
+				<box padding="7">
+					<pen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<text><![CDATA[ID_INASISTENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="256" y="10" width="100" height="30" uuid="5f9c0da4-2448-4974-a964-77e17cfba6ae">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6ee32324-8d64-4fcd-9e15-c4d5bdb81fc7"/>
+				</reportElement>
+				<box padding="7">
+					<pen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="10" width="100" height="30" uuid="539bc8a6-cea5-4689-8e71-f36b94740816">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b9cdad97-fecf-479f-886e-04830da38a8b"/>
+				</reportElement>
+				<box padding="7">
+					<pen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<text><![CDATA[HORA_INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="456" y="10" width="100" height="30" uuid="f26f6307-f334-4372-8b6b-3860608913a5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="09789db9-980e-40d4-a2d0-6fbf02ed2323"/>
+				</reportElement>
+				<box padding="7">
+					<pen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<text><![CDATA[HORA_FIN]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="129" splitType="Stretch">
+			<textField>
+				<reportElement x="56" y="30" width="100" height="30" backcolor="#1CB4EB" uuid="ed77390c-0bed-4872-89f7-b8fd2eed8a40">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="79452129-321f-4602-8411-9a77ec951e5b"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="30" width="100" height="30" backcolor="#1CB4EB" uuid="c86de878-803e-4612-b699-2c2cb8d8dc7f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e83c6802-21d7-4a2f-90d6-fe38a7211850"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{ID_INASISTENCIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="256" y="30" width="100" height="30" backcolor="#1CB4EB" uuid="40a826e0-bd23-4ab3-932a-87d367df5589">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6ee32324-8d64-4fcd-9e15-c4d5bdb81fc7"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="30" width="100" height="30" backcolor="#1CB4EB" uuid="090fabc4-5b64-4d6b-ad47-d50a324b17ec">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b9cdad97-fecf-479f-886e-04830da38a8b"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{HORA_INICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="30" width="100" height="30" backcolor="#1CB4EB" uuid="4d6d6e57-cb68-4e46-b016-25d14968354c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="09789db9-980e-40d4-a2d0-6fbf02ed2323"/>
+				</reportElement>
+				<box padding="0">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{HORA_FIN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
