@@ -283,7 +283,7 @@ public abstract class DBController {
         return daoFact.getPerfilExperenciaDAO().insertar(perfil_Expe);
     }
 
-    public static void actualizarHoraExtra(PerfilExperiencia perfil_Expe) {
+    public static void actualizarPerfilExperiencia(PerfilExperiencia perfil_Expe) {
         daoFact.getPerfilExperenciaDAO().actualizar(perfil_Expe);
     }
 
@@ -433,8 +433,10 @@ public abstract class DBController {
         return daoFact.getUsuarioDAO().listarUsuariosLibres(fecha, horaI, horaF, nombre_perfil);
     }
 
-
-
-
+    
+    public static ArrayList<PersonalBiblioteca> listarPersonalPorPerfilExperiencia (int idPerfilExperiencia){
+        return daoFact.getPersonalBibliotecaDAO().listarPorPerfilExperiencia(idPerfilExperiencia);
+    }
+    
 
 }

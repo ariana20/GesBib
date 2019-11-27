@@ -17,7 +17,7 @@ public interface PersonalBibliotecaDAO {
     
     int asignarPerfil(PersonalBiblioteca personalBiblioteca,PerfilExperiencia perfilExperiencia);
     ArrayList<PersonalBiblioteca> listar(String nombre, String apellido);
-
+    ArrayList<PersonalBiblioteca> listarPorPerfilExperiencia (int idPerfilExperiencia);
     public int eliminar(int idPersonal);
     public PersonalBiblioteca informacionPersonalBiblioteca(String correo);
     ArrayList<PersonalBiblioteca> listar_todo_sobre_personal(String nombre);

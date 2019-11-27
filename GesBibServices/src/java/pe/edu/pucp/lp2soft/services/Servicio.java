@@ -74,12 +74,18 @@ public class Servicio {
         return DBController.listarUsuariosLibres(fecha, hora_inicio, hora_fin, nombre_perfil);
     }
 
+
     @WebMethod(operationName = "actualizarDatosUsuario")
     public int actualizarDatosUsuario(@WebParam(name = "id") int id, @WebParam(name = "nombre") String nombre, @WebParam(name = "apellido") String apellido, @WebParam(name = "correo") String correo, @WebParam(name = "foto") byte[] foto) {
         return DBController.actualizarDatosUsuario(id, nombre,apellido,correo,foto);
     }
 
 
+    
+    @WebMethod(operationName = "listarPersonalAsignadoAPerfilExperiencia")
+    public ArrayList<PersonalBiblioteca> listarPersonalAsignadoAPerfilExperiencia(@WebParam(name = "idPerfilExperiencia") int idPerfilExperiencia){
+        return DBController.listarPersonalPorPerfilExperiencia(idPerfilExperiencia);
+    }
     /////////////////////////////////////////////////////////////////////////////////////////
     //PERFIL_EXPERIENCIA
     @WebMethod(operationName = "insertarAviso")
@@ -108,7 +114,21 @@ public class Servicio {
     public int insertarPerfilExperiencia(@WebParam(name = "perfilExperiencia") PerfilExperiencia perfilExperiencia) {
         return DBController.insertarPerfilExperiencia(perfilExperiencia);
     }
+<<<<<<< HEAD
 
+=======
+    
+    @WebMethod(operationName = "actualizarPerfilExperiencia")
+    public void actualizarPerfilExperiencia(@WebParam(name = "perfilExperiencia") PerfilExperiencia perfilExperiencia){
+        DBController.actualizarPerfilExperiencia(perfilExperiencia);
+    }
+    
+    @WebMethod(operationName = "eliminarPerfilExperiencia")
+    public void eliminarPerfilExperiencia(@WebParam(name = "idPerfilExperiencia") int idPerfilExperiencia){
+        DBController.elimPerfilExperiencia(idPerfilExperiencia);
+    }
+    
+>>>>>>> Daniel
     @WebMethod(operationName = "listarPerfilExperiencia")
     public ArrayList<PerfilExperiencia> listarPerfilExperiencia() {
         return DBController.listarPerfilExperiencia();
