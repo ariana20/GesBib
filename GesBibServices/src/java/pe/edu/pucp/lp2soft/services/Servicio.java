@@ -384,4 +384,16 @@ public class Servicio {
     public void insertarDistribucionPersonal(@WebParam(name = "distrib_Per") DistribucionPersonal distrib_Per) {
         DBController.insertarDistribucionPersonal(distrib_Per);
     }
+    
+    //bytys
+     @WebMethod(operationName = "listarDistribPersonalenFecha")
+    public ArrayList<DistribucionPersonal> listarDistribPersonalenFecha(
+            @WebParam(name = "id_Personal") int id_Personal,
+            @WebParam(name = "fecha") Date fecha ) {
+        return DBController.listarDistribPersonalenFecha(id_Personal,fecha);
+    }    
+    //bytys
+    
+    
+    
 }

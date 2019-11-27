@@ -180,6 +180,14 @@ public abstract class DBController {
         return daoFact.getDistribucionPersonalDAO().listarPorFechaHora(idPuntoAtencion, fecha, horaI, horaF);
     }
 
+    //byTyS
+    public static ArrayList<DistribucionPersonal> listarDistribPersonalenFecha(
+            int idPersonal,Date fecha) {
+        return daoFact.getDistribucionPersonalDAO().listarDistribPersonalenFecha(
+                idPersonal, fecha);
+    }
+    
+    //byTyS
 
     //GESTOR
     public static int insertarGestor(Gestor gestor) {

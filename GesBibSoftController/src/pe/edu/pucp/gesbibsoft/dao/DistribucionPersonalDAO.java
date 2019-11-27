@@ -20,4 +20,9 @@ public interface DistribucionPersonalDAO {
     ArrayList<DistribucionPersonal> listarPorPersonal(int idPersonal, Date fechaIni, Date fechaFin);
     
     ArrayList<PuntosAtencion> listarPorFechaHora(int idPuntoAtencion, Date fecha, Time hora_ini, Time hora_fin);
+
+    //byTyS
+    ArrayList<DistribucionPersonal> listarDistribPersonalenFecha(
+            int idPersonal, Date fecha);
+    
 }
