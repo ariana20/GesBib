@@ -385,4 +385,32 @@ public class Servicio {
 	return arreglo;
     }
     
+    
+    @WebMethod(operationName = "generarReporteHorasTrabajadas")
+    public byte[] generarReporteHorasTrabajadas( @WebParam (name = "ID_PERSONAL") int idPersonal, 
+                                     @WebParam (name = "FECHA_INICIO") Date fechaInicio,
+                                     @WebParam (name = "FECHA_FIN") Date fechaFin){
+        byte[] arreglo = null;
+        try{ 
+            String rutaPrincipal = Servicio.class.getResource("/pe/edu/pucp/lp2soft/reports/Horas_Trabajadas.jasper").getPath(); //cambiar por mi ruta
+            rutaPrincipal = rutaPrincipal.replaceAll("%20", " ");
+            JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(rutaPrincipal);
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");//cambiar a mysql
+            Connection con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+           
+            HashMap hm = new HashMap(); 
+            //cambiar datos de entrada o parámetros
+            hm.put("ID_PERSONAL", idPersonal);
+            hm.put("FECHA_INICIO",fechaInicio);
+            hm.put("FECHA_FIN",fechaFin);
+            
+            JasperPrint jp = JasperFillManager.fillReport(reporte,hm,con);                  
+            arreglo = JasperExportManager.exportReportToPdf(jp);
+            
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+	}
+	return arreglo;
+    }
 }
