@@ -72,7 +72,7 @@ public class BibliotecaMySQL implements BibliotecaDAO {
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
 
-            cs = con.prepareCall("{call ACTUALIZAR_BIBLIOTECA(?,?,?)}");
+            cs = con.prepareCall("{call ACTUALIZAR_BIBLIOTECA(?,?,?,?)}");
             cs.setInt("_ID_BIBLIOTECA", biblioteca.getId());
             cs.setString("_NOMBRE", biblioteca.getNombre());
             cs.setInt("_ID_GESTOR",biblioteca.getGestor().getId());
@@ -111,7 +111,7 @@ public class BibliotecaMySQL implements BibliotecaDAO {
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
             cs = con.prepareCall("{call ELIMINAR_BIBLIOTECA(?)}");
-            cs.setInt("_ID", idBiblioteca);
+            cs.setInt("_ID_BIBLIOTECA", idBiblioteca);
             
             cs.executeUpdate();
             res=1;

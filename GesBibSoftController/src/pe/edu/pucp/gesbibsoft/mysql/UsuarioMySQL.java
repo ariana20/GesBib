@@ -158,17 +158,18 @@ public class UsuarioMySQL implements UsuarioDAO{
 
     @Override
     public int cambiarContrasenaToken(String correo, String nuevaContrasena, String token) {
-        int resultado = 0;
+        int resultado = -1;
         
         // Se actualiza la contraseña en la BD
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            cs = con.prepareCall("{call ACTUALIZAR_CONTRASENA_USUARIO(?, ?, ?)}");
+            cs = con.prepareCall("{call ACTUALIZAR_CONTRASENA_USUARIO(?, ?, ?, ?)}");
             cs.setString("_EMAIL", correo);
             cs.setString("_PASSWORD_NUEVO", nuevaContrasena);
             cs.setString("_TOKEN", token);
-            cs.executeQuery();
-            resultado = 1;
+            cs.registerOutParameter("_EXITO", java.sql.Types.INTEGER);
+            cs.executeUpdate();
+            resultado=cs.getInt("_EXITO");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {
