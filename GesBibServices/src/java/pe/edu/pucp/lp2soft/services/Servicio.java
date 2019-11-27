@@ -430,12 +430,15 @@ public class Servicio {
     public ArrayList<DistribucionPersonal> listarDistribucionPersonalPorFecha(@WebParam(name = "idPersonal") int idPersonal, @WebParam(name = "idPuntoAtencion")  int idPuntoAtencion,
             @WebParam(name = "fechaIni") Date fechaIni, @WebParam(name = "fechaFin") Date fechaFin) throws ParseException{
         return DBController.listarDistribucionPersonalPorFecha( idPuntoAtencion, fechaIni, fechaFin);
-
-    @WebMethod(operationName = "listarDistribucionPersonalPorFechaHora")
-    public ArrayList<PuntosAtencion> listarDistribucionPersonalPorFechaHora(@WebParam(name = "idPersonal") int idPersonal, @WebParam(name = "idPuntoAtencion") int idPuntoAtencion,
-            @WebParam(name = "fecha") Date fecha, @WebParam(name = "horaIni") String horaIni, @WebParam(name = "horaFin") String horaFin) throws ParseException {
-        return DBController.listarDistribucionPersonalPorFechaHora(idPersonal, idPuntoAtencion, fecha, horaIni, horaFin);
     }
+
+//    @WebMethod(operationName = "listarDistribucionPersonalPorFechaHora")
+//    public ArrayList<PuntosAtencion> listarDistribucionPersonalPorFechaHora(@WebParam(name = "idPersonal") int idPersonal, @WebParam(name = "idPuntoAtencion") int idPuntoAtencion,
+//            @WebParam(name = "fecha") Date fecha, @WebParam(name = "horaIni") String horaIni, @WebParam(name = "horaFin") String horaFin) throws ParseException {
+//        return DBController.listarDistribucionPersonalPorFechaHora(idPersonal, idPuntoAtencion, fecha, horaIni, horaFin);
+//    }
+    
+    
 
     @WebMethod(operationName = "elimDistribucionPersonal")
     public void elimDistribucionPersonal(@WebParam(name = "idDistrib_Per") int idDistrib_Per, @WebParam(name = "idPuntoAtencion") int idPuntoAtencion) {
