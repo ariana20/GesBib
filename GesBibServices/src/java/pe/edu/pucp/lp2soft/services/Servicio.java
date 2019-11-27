@@ -61,6 +61,10 @@ public class Servicio {
                                        @WebParam(name = "nombre_perfil") String nombre_perfil) throws ParseException{
         return DBController.listarUsuariosLibres(fecha, hora_inicio, hora_fin, nombre_perfil);
     }
+    @WebMethod(operationName = "actualizarDatosUsuario")
+    public int actualizarDatosUsuario(@WebParam(name = "id") int id, @WebParam(name = "nombre") String nombre, @WebParam(name = "apellido") String apellido, @WebParam(name = "correo") String correo, @WebParam(name = "foto") byte[] foto) {
+        return DBController.actualizarDatosUsuario(id, nombre,apellido,correo,foto);
+    }
     /////////////////////////////////////////////////////////////////////////////////////////
     //PERFIL_EXPERIENCIA
     @WebMethod(operationName = "insertarAviso")
@@ -182,6 +186,13 @@ public class Servicio {
     public ArrayList<PersonalBiblioteca> listarPersonalBiblioteca(@WebParam(name = "nombre") String nombre, @WebParam(name = "apellido")  String apellido){
         return DBController.listarPersonalBiblioteca(nombre, apellido);
     }
+    
+    
+     @WebMethod(operationName = "listartodosobrepersonal")
+    public ArrayList<PersonalBiblioteca> listar_todo_sobre_personal(@WebParam(name = "nombre") String nombre){
+        return DBController.listar_todo_sobre_personal(nombre);
+    }
+    
     @WebMethod(operationName = "eliminarPersonalBiblioteca")
     public int eliminarPersonalBiblioteca(@WebParam(name = "idPersonal") int idPersonal){
         return DBController.eliminarPersonal(idPersonal);
@@ -196,6 +207,11 @@ public class Servicio {
     public int cambiarContrasenaToken(@WebParam(name = "correo") String correo, @WebParam(name = "nuevaContrasena") String nuevaContrasena,
             @WebParam(name = "token") String token) {
         return DBController.cambiarContrasenaToken(correo, nuevaContrasena, token);
+    }
+    
+    @WebMethod(operationName = "cambiarContrasenaConfig")
+    public int cambiarContrasenaConfig(@WebParam(name = "id") int id, @WebParam(name = "nuevaContrasena") String nuevaContrasena) {
+        return DBController.cambiarContrasenaConfig(id, nuevaContrasena);
     }
     
     @WebMethod(operationName = "informacionPersonalBiblioteca")

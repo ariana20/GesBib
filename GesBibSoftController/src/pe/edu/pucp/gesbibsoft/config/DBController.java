@@ -383,6 +383,10 @@ public abstract class DBController {
     public static ArrayList<PersonalBiblioteca> listarPersonalBiblioteca(String nombre, String apellido){
         return daoFact.getPersonalBibliotecaDAO().listar(nombre, apellido);
     }
+    
+    public static ArrayList<PersonalBiblioteca> listar_todo_sobre_personal(String nombre){
+        return daoFact.getPersonalBibliotecaDAO().listar_todo_sobre_personal(nombre);
+    }
 
     public static String hallarTipoUsuario(int idUsuario) {
         return daoFact.getPersonalDAO().hallarTipoUsuario(idUsuario);
@@ -395,6 +399,14 @@ public abstract class DBController {
     public static int cambiarContrasenaToken(String correo, String nuevaContrasena, String token) {
         return daoFact.getUsuarioDAO().cambiarContrasenaToken(correo, nuevaContrasena, token);
     }
+    
+    public static int cambiarContrasenaConfig(int id, String nuevaContrasena) {
+        return daoFact.getUsuarioDAO().cambiarContrasenaConfig(id, nuevaContrasena);
+    }
+    
+    public static int actualizarDatosUsuario(int id,String nombre, String apellido, String correo, byte[] foto){
+        return daoFact.getUsuarioDAO().actualizarDatosUsuario(id, nombre,apellido,correo, foto);
+    }    
     
     public static PersonalBiblioteca informacionPersonalBiblioteca(String correo) {
         return daoFact.getPersonalBibliotecaDAO().informacionPersonalBiblioteca(correo);
