@@ -61,6 +61,11 @@ public class Servicio {
                                        @WebParam(name = "nombre_perfil") String nombre_perfil) throws ParseException{
         return DBController.listarUsuariosLibres(fecha, hora_inicio, hora_fin, nombre_perfil);
     }
+    
+    @WebMethod(operationName = "listarPersonalAsignadoAPerfilExperiencia")
+    public ArrayList<PersonalBiblioteca> listarPersonalAsignadoAPerfilExperiencia(@WebParam(name = "idPerfilExperiencia") int idPerfilExperiencia){
+        return DBController.listarPersonalPorPerfilExperiencia(idPerfilExperiencia);
+    }
     /////////////////////////////////////////////////////////////////////////////////////////
     //PERFIL_EXPERIENCIA
     @WebMethod(operationName = "insertarAviso")
@@ -85,6 +90,16 @@ public class Servicio {
     @WebMethod(operationName = "insertarPerfilExperiencia")
     public int insertarPerfilExperiencia(@WebParam(name = "perfilExperiencia") PerfilExperiencia perfilExperiencia){
         return DBController.insertarPerfilExperiencia(perfilExperiencia);
+    }
+    
+    @WebMethod(operationName = "actualizarPerfilExperiencia")
+    public void actualizarPerfilExperiencia(@WebParam(name = "perfilExperiencia") PerfilExperiencia perfilExperiencia){
+        DBController.actualizarPerfilExperiencia(perfilExperiencia);
+    }
+    
+    @WebMethod(operationName = "eliminarPerfilExperiencia")
+    public void eliminarPerfilExperiencia(@WebParam(name = "idPerfilExperiencia") int idPerfilExperiencia){
+        DBController.elimPerfilExperiencia(idPerfilExperiencia);
     }
     
     @WebMethod(operationName = "listarPerfilExperiencia")

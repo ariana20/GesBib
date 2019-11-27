@@ -56,7 +56,44 @@ public class PersonalBibliotecaMySQL implements PersonalBibliotecaDAO{
     
     }
     
-    
+    @Override
+    public ArrayList<PersonalBiblioteca> listarPorPerfilExperiencia (int idPerfilExperiencia){
+        ArrayList<PersonalBiblioteca> personal = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+            CallableStatement cStmt = con.prepareCall("{call LISTAR_PERSONAL_ASIGNADO_POR_PERFIL_EXPERIENCIA(?)}");
+            cStmt.setInt("_ID_PERFIL_EXPERIENCIA", idPerfilExperiencia);
+            ResultSet rs=cStmt.executeQuery();
+            while (rs.next()) {
+                Bibliotecario e = new Bibliotecario();
+                e.setId(rs.getInt("ID_PERSONAL_BIBLIOTECA"));
+                e.setNombre(rs.getString("NOMBRE"));
+                e.setApellido(rs.getString("APELLIDO"));
+                e.setEmail(rs.getString("EMAIL"));
+                e.setContrasenia(rs.getString("PASSWORD"));
+                e.setCodigo(rs.getString("CODIGO"));
+                e.setFecha_ingreso(rs.getDate("FECHA_INGRESO"));
+                e.setTotalHorasExtra(rs.getFloat("TOTAL_HORA_EXTRA"));
+                e.getTurno().setId(rs.getInt("ID_TURNO"));
+                Biblioteca b=new Biblioteca();
+                b.setId(rs.getInt("ID_BIBLIOTECA"));
+                e.setBiblioteca(b);
+                e.setDiaSemana(rs.getString("DIA_SEMANA"));
+        
+                personal.add(e);
+            }
+            
+        } catch ( SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return personal;
+    }
     
     @Override
     public ArrayList<PersonalBiblioteca> listar(String nombre, String apellido) {
