@@ -83,13 +83,13 @@ public class CapacitacionMySQL implements CapacitacionDAO {
         int resultado=0;
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
-            cs = con.prepareCall("{call ACTUALIZAR_CAPACITACION(?,?,?,?,?,?,?,?,?)}");
+            cs = con.prepareCall("{call ACTUALIZAR_CAPACITACION(?,?,?,?,?,?,?,?)}");
             cs.setInt("_ID_CAPACITACION", capacitacion.getId());
             cs.setString("_NOMBRE", capacitacion.getNombre());
             cs.setString("_DESCRIPCION", capacitacion.getDescripcion());
             cs.setString("_LUGAR", capacitacion.getLugar());
             
-            java.sql.Date date1 = new java.sql.Date(capacitacion.getFecha_ini().getTime());
+            /*java.sql.Date date1 = new java.sql.Date(capacitacion.getFecha_ini().getTime());
             java.sql.Date date2 = new java.sql.Date(capacitacion.getFecha_fin().getTime());
             java.sql.Date date3 = new java.sql.Date(capacitacion.getInicio_inscripcion().getTime());
             java.sql.Date date4 = new java.sql.Date(capacitacion.getFin_inscripcion().getTime());
@@ -97,7 +97,14 @@ public class CapacitacionMySQL implements CapacitacionDAO {
             cs.setDate("_FECHA_INI", date1);
             cs.setDate("_FECHA_FIN", date2);
             cs.setDate("_INICIO_INSCRIPCION", date3);
-            cs.setDate("_FIN_INSCRIPCION", date4);
+            cs.setDate("_FIN_INSCRIPCION", date4);*/
+            
+            cs.setDate("_FECHA_INI", new java.sql.Date(capacitacion.getFecha_ini().getTime()));
+            cs.setDate("_FECHA_FIN", new java.sql.Date(capacitacion.getFecha_fin().getTime()));
+            cs.setDate("_INICIO_INSCRIPCION", new java.sql.Date(capacitacion.getInicio_inscripcion().getTime()));
+            cs.setDate("_FIN_INSCRIPCION", new java.sql.Date(capacitacion.getFin_inscripcion().getTime()));            
+            
+            cs.executeUpdate();
             
             // INSERTANDO TODOS LOS DIAS DE LA CAPACITACION EN LA INSTANCIA DE CAPACITACION
             if (capacitacion.getListaDiasCapacitacion() != null) {
