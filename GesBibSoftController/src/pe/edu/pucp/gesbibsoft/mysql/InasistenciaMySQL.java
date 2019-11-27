@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import pe.edu.pucp.gesbibsoft.config.DBManager;
 import pe.edu.pucp.gesbibsoft.dao.InasistenciaDAO;
-import pe.edu.pucp.gesbibsoft.model.Biblioteca;
-import pe.edu.pucp.gesbibsoft.model.Gestor;
 import pe.edu.pucp.gesbibsoft.model.Inasistencia;
 import pe.edu.pucp.gesbibsoft.model.TipoInasistencia;
 

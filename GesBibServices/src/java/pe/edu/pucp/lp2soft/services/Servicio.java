@@ -5,15 +5,24 @@
  */
 package pe.edu.pucp.lp2soft.services;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.Time;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import pe.edu.pucp.gesbibsoft.config.DBController;
+import pe.edu.pucp.gesbibsoft.config.DBManager;
 import pe.edu.pucp.gesbibsoft.enums.TipoPersonal;
 import pe.edu.pucp.gesbibsoft.model.Auxiliar;
 import pe.edu.pucp.gesbibsoft.model.Aviso;
@@ -369,5 +378,64 @@ public class Servicio {
     @WebMethod(operationName = "insertarDistribucionPersonal")
     public void insertarDistribucionPersonal(@WebParam(name = "distrib_Per") DistribucionPersonal distrib_Per){
         DBController.insertarDistribucionPersonal(distrib_Per);
+    }
+    
+    
+    // REPORTEEEEEES AEEEEA
+    @WebMethod(operationName = "generarReporteInasistencias")
+    public byte[] generarReporteInasistencias( @WebParam (name = "ID_USUARIO") int idUsuario , 
+                                     @WebParam (name = "FECHA_INICIO") Date fechaInicio,
+                                     @WebParam (name = "FECHA_FIN") Date fechaFin){
+        byte[] arreglo = null;
+        try{ 
+            String rutaPrincipal = Servicio.class.getResource("/pe/edu/pucp/lp2soft/reports/Reporte_Inasistencias_1.jasper").getPath(); //cambiar por mi ruta
+            rutaPrincipal = rutaPrincipal.replaceAll("%20", " ");
+            JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(rutaPrincipal);
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");//cambiar a mysql
+            Connection con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+           
+            HashMap hm = new HashMap(); 
+            //cambiar datos de entrada o parámetros
+            hm.put("ID_USUARIO", idUsuario);
+            hm.put("FECHA_INICIO",fechaInicio);
+            hm.put("FECHA_FIN",fechaFin);
+            
+            JasperPrint jp = JasperFillManager.fillReport(reporte,hm,con);                  
+            arreglo = JasperExportManager.exportReportToPdf(jp);
+            
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+	}
+	return arreglo;
+    }
+    
+    
+    @WebMethod(operationName = "generarReporteHorasTrabajadas")
+    public byte[] generarReporteHorasTrabajadas( @WebParam (name = "ID_PERSONAL") int idPersonal, 
+                                     @WebParam (name = "FECHA_INICIO") Date fechaInicio,
+                                     @WebParam (name = "FECHA_FIN") Date fechaFin){
+        byte[] arreglo = null;
+        try{ 
+            String rutaPrincipal = Servicio.class.getResource("/pe/edu/pucp/lp2soft/reports/Horas_Trabajadas.jasper").getPath(); //cambiar por mi ruta
+            rutaPrincipal = rutaPrincipal.replaceAll("%20", " ");
+            JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(rutaPrincipal);
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");//cambiar a mysql
+            Connection con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+           
+            HashMap hm = new HashMap(); 
+            //cambiar datos de entrada o parámetros
+            hm.put("ID_PERSONAL", idPersonal);
+            hm.put("FECHA_INICIO",fechaInicio);
+            hm.put("FECHA_FIN",fechaFin);
+            
+            JasperPrint jp = JasperFillManager.fillReport(reporte,hm,con);                  
+            arreglo = JasperExportManager.exportReportToPdf(jp);
+            
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+	}
+	return arreglo;
     }
 }
