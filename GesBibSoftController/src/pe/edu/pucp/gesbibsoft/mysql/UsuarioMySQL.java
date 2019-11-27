@@ -85,7 +85,7 @@ public class UsuarioMySQL implements UsuarioDAO{
         try {
             con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
             cs = con.prepareCall("{call LISTAR_USUARIOS_LIBRES(?,?,?,?)}");
-            cs.setDate("_FEHCA", (java.sql.Date) fecha);
+            cs.setDate("_FECHA",  new java.sql.Date(fecha.getTime()));
             cs.setTime("_HORA_INICIO", hora_inicio);
             cs.setTime("_HORA_FIN", hora_fin);
             cs.setString("_NOMBRE_PERFIL", nombre_perfil);
