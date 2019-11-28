@@ -519,7 +519,31 @@ public class Servicio {
     }    
     //bytys
     
-    
-    
-
+    @WebMethod(operationName = "generarReporteDistribucion")
+    public byte[] generarReporteDistribucion( @WebParam (name = "ID_PUNTO_ATENCION") int idPuntoAtencion, 
+                                     @WebParam (name = "FECHA_INI") Date fechaIni,
+                                     @WebParam (name = "FECHA_FIN") Date fechaFin){
+        byte[] arreglo = null;
+        try{ 
+            String rutaPrincipal = Servicio.class.getResource("/pe/edu/pucp/lp2soft/reports/ReporteDistribucion.jasper").getPath(); //cambiar por mi ruta
+            rutaPrincipal = rutaPrincipal.replaceAll("%20", " ");
+            JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(rutaPrincipal);
+            
+            Class.forName("com.mysql.cj.jdbc.Driver");//cambiar a mysql
+            Connection con = DriverManager.getConnection(DBManager.url, DBManager.user, DBManager.password);
+           
+            HashMap hm = new HashMap(); 
+            //cambiar datos de entrada o parámetros
+            hm.put("ID_PUNTO_ATENCION", idPuntoAtencion);
+            hm.put("FECHA_INI",fechaIni);
+            hm.put("FECHA_FIN",fechaFin);
+            
+            JasperPrint jp = JasperFillManager.fillReport(reporte,hm,con);                  
+            arreglo = JasperExportManager.exportReportToPdf(jp);
+            
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+	}
+	return arreglo;
+    }
 }
